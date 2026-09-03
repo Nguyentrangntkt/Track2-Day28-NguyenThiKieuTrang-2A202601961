@@ -1,0 +1,28 @@
+{
+  "validation": {
+    "command": "uv run python scripts/validate_manifests.py",
+    "result": "PASS",
+    "output": "Kubernetes and GitOps manifest contracts passed"
+  },
+  "argo_application": {
+    "name": "lab28-platform",
+    "namespace": "argocd",
+    "target_revision": "refs/tags/v3.0.0",
+    "destination_namespace": "lab28",
+    "automated_prune": true,
+    "automated_self_heal": true,
+    "revision_history_limit": 5
+  },
+  "git_desired_state_diff": {
+    "path": "gitops",
+    "result": "clean"
+  },
+  "live_drift_self_heal": {
+    "status": "UNVERIFIED",
+    "reason": "No accessible Argo CD/Kubernetes cluster, credentials, or repository drift/rollback script was provided. No live manifest drift was created."
+  },
+  "live_rollback": {
+    "status": "UNVERIFIED",
+    "reason": "A live Argo CD sync and desired-revision rollback require an accessible cluster; static manifest validation does not prove those operations."
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "grafana_url": "http://localhost:3000",
+  "dashboards": [
+    {
+      "title": "Lab 28 Platform Overview",
+      "uid": "lab28-platform",
+      "url": "/d/lab28-platform/lab-28-platform-overview"
+    }
+  ],
+  "datasources": [
+    {
+      "name": "Prometheus",
+      "uid": "prometheus",
+      "type": "prometheus",
+      "url": "http://prometheus:9090",
+      "provisioned": true
+    }
+  ],
+  "verification": {
+    "method": "live Grafana UI screenshot plus repository provisioning configuration",
+    "screenshot": "evidence/screenshots/IP09_grafana_dashboard.png",
+    "time_range_visible": "Last 30 minutes",
+    "panels_with_live_data": ["Request rate", "Request duration"],
+    "panels_without_current_series": ["Errors", "Pipeline saturation / lag"],
+    "current_api_access": "UNVERIFIED: Grafana API returned 401 with the previously attempted credentials; this evidence does not claim a successful authenticated API query."
+  }
+}

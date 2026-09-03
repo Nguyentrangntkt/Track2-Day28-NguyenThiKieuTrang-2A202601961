@@ -1,0 +1,29 @@
+{
+  "topic": "data.raw",
+  "key": "cp11-0bebb441",
+  "partition": 0,
+  "offset": 9,
+  "headers": {
+    "traceparent": "00-1ce9b921ee904ae49292bea2a39069f5-c67a626b77ef5ae2-01",
+    "idempotency-key": "cp11-0bebb441",
+    "schema_version": "1"
+  },
+  "trace_id": "1ce9b921ee904ae49292bea2a39069f5",
+  "value": {
+    "schema_version": "1",
+    "event_id": "689ec3f3acba4b7198a72d87a73eaf84",
+    "idempotency_key": "cp11-0bebb441",
+    "entity_id": "cp11-0bebb441",
+    "occurred_at": "2026-09-03T16:53:05.083473Z",
+    "producer": "lab28-api",
+    "traceparent": "00-1ce9b921ee904ae49292bea2a39069f5-ee5db6d80eced225-01",
+    "payload": {
+      "kind": "feedback",
+      "asker_id": "cp11-0bebb441",
+      "text": "Checkpoint 11 observability traffic 0bebb441",
+      "rating": 5,
+      "locale": "vi",
+      "label": "positive"
+    }
+  }
+}

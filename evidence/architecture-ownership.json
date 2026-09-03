@@ -1,0 +1,33 @@
+{
+  "architecture_source": "docs/images/lab28-architecture-overview.svg",
+  "ownership_source": "docs/team-role-cards.md",
+  "submission_scope": "Lab 28 Platform Integration & Production Readiness",
+  "ownership": [
+    {
+      "role": "Ingestion & Orchestration",
+      "integration_points": ["IP01", "IP02"],
+      "responsibilities": ["schema", "key", "retry", "commit", "DLQ/replay"]
+    },
+    {
+      "role": "Data & ML",
+      "integration_points": ["IP03", "IP04", "IP06"],
+      "responsibilities": ["Delta version", "Feast path", "MLflow promotion/rollback"]
+    },
+    {
+      "role": "Serving & Retrieval",
+      "integration_points": ["IP05", "IP07"],
+      "responsibilities": ["vector IDs", "grounding", "budgets", "real-vLLM identity"]
+    },
+    {
+      "role": "Platform & Observability",
+      "integration_points": ["IP08", "IP09", "IP10"],
+      "responsibilities": ["gateway", "probes", "golden signals", "Kubernetes/GitOps"]
+    },
+    {
+      "role": "Presenter / Incident Commander",
+      "integration_points": [],
+      "responsibilities": ["demo order", "evidence index", "incident", "Q&A"]
+    }
+  ],
+  "note": "The architecture SVG is the visual artifact; this JSON is its submission-facing ownership index. Team-role cards permit combining roles for a small team but do not permit omitting an integration point."
+}

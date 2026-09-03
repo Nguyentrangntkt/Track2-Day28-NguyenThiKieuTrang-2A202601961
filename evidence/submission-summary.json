@@ -1,0 +1,20 @@
+{
+  "status": "READY_FOR_LIMITED_SUBMISSION",
+  "pass": ["IP01", "IP08"],
+  "partial": ["IP05", "IP06", "IP09", "IP10"],
+  "unverified": ["IP02", "IP03", "IP04", "IP07"],
+  "fail": [],
+  "environment_blockers": [
+    "The full integration suite requires Airflow at localhost:8082. It produced setup errors on the 8 GB basic stack and was not retried with --profile full.",
+    "IP07 requires a real GPU-backed vLLM endpoint with /version, /v1/models and vllm: metrics; none is available.",
+    "IP02/IP03/IP04 require the Airflow/Spark/Delta path, which is outside the basic profile.",
+    "IP10 has only the synchronous gateway/API/Kafka-producer leg; the full asynchronous and serving span set is unverified.",
+    "Live Argo CD drift/self-heal and rollback are unverified because no accessible cluster or credentials were supplied."
+  ],
+  "evidence_files_missing": [
+    "evidence/ip02-airflow-run.json",
+    "evidence/ip03-delta-history.json",
+    "evidence/ip04-feast-online.json"
+  ],
+  "submission_constraints": "No full profile, mock vLLM, fabricated trace, fabricated data-plane evidence, or destructive volume operation was used."
+}

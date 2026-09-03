@@ -1,0 +1,39 @@
+{
+  "trace_id": "1ce9b921ee904ae49292bea2a39069f5",
+  "traceparent": "00-1ce9b921ee904ae49292bea2a39069f5-eb92fbf34f284d69-01",
+  "dag_run_id": null,
+  "span_count": 8,
+  "span_names": [
+    "POST /api/v1/feedback",
+    "POST /api/v1/feedback http receive",
+    "POST /api/v1/feedback http send",
+    "lab28.api.ingest",
+    "lab28.gateway.request",
+    "lab28.kafka.produce"
+  ],
+  "services": ["lab28-api", "lab28-gateway"],
+  "required_spans_present": [
+    "lab28.api.ingest",
+    "lab28.gateway.request",
+    "lab28.kafka.produce"
+  ],
+  "required_spans_missing": [
+    "lab28.airflow.dag",
+    "lab28.api.ask",
+    "lab28.feast.get_online_features",
+    "lab28.kafka.consume",
+    "lab28.mlflow.resolve_release",
+    "lab28.qdrant.query",
+    "lab28.spark.delta_merge",
+    "lab28.vllm.chat_completion"
+  ],
+  "kafka_record": {
+    "topic": "data.raw",
+    "partition": 0,
+    "offset": 9,
+    "key": "cp11-0bebb441",
+    "traceparent": "00-1ce9b921ee904ae49292bea2a39069f5-c67a626b77ef5ae2-01"
+  },
+  "status": "partial_basic_profile",
+  "langsmith_status": "UNVERIFIED"
+}

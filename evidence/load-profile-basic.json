@@ -1,0 +1,42 @@
+{
+  "profile": "basic",
+  "endpoint": "GET http://localhost:8080/ready",
+  "tool": "load-tests/run_profile.py",
+  "requests": 10,
+  "workers": 1,
+  "wall_duration_seconds": 5.212787,
+  "throughput_requests_per_second": 1.918362,
+  "status_counts": {
+    "200": 10
+  },
+  "error_rate": 0.0,
+  "latency_ms": {
+    "p50": 368.4503999975277,
+    "p95": 1586.1081999973976,
+    "p99": 1586.1081999973976
+  },
+  "observed_api_metrics": {
+    "route": "/ready",
+    "status": "200",
+    "cumulative_count": 23,
+    "cumulative_sum_seconds": 12.809914289998915,
+    "bucket_counts": {
+      "le_0.5_seconds": 19,
+      "le_1.0_seconds": 20,
+      "le_2.5_seconds": 23
+    }
+  },
+  "readiness": {
+    "status": "degraded",
+    "ready_components": ["kafka", "mlflow", "qdrant", "feast"],
+    "optional_unready_component": {
+      "name": "vllm",
+      "detail": "unreachable: ConnectError"
+    }
+  },
+  "bottleneck": {
+    "conclusion": "Tail latency is on the /ready dependency fan-out path; P95/P99 were 1586.11 ms while the cumulative route histogram has samples above 1 second.",
+    "evidence": "The API only exposes route-level request-duration metrics, so latency cannot be attributed to one dependency. The only non-ready probe was optional vLLM (ConnectError); no inference request or GPU endpoint was invoked.",
+    "scope_limit": "This is a light 8 GB local baseline, not a production-capacity claim."
+  }
+}

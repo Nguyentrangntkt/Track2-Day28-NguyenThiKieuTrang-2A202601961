@@ -57,6 +57,12 @@ Do đó hiện chưa có live evidence cho:
 
 Các phần này cần được chạy trên máy có tài nguyên cao hơn hoặc môi trường dùng chung.
 
+### Integration suite bị chặn bởi dependency Airflow của full profile
+
+Lệnh final validation `uv run pytest integration-tests -m "not gpu and not langsmith" -q` tạo 56 setup errors vì fixture yêu cầu Airflow tại `localhost:8082`.
+
+Airflow thuộc full profile và không được khởi động trên máy local 8 GB theo giới hạn thực hiện của bài. Đây là environment blocker của live integration suite, không phải code failure và không được sửa bằng cách thay test hoặc giả lập service.
+
 ### vLLM chưa có GPU endpoint thật
 
 IP07 yêu cầu vLLM thật với:
@@ -88,17 +94,17 @@ Kafka record tiếp tục mang cùng Trace ID qua W3C `traceparent`.
 
 Các spans thuộc Airflow, Spark, Delta, Feast online lookup, Qdrant query, MLflow release resolution và vLLM completion chưa được xác minh trong cùng một full happy-path trace.
 
-### Load test chưa hoàn tất
+### Load test chỉ có baseline nhẹ của basic stack
 
-Hiện chưa có artifact P50/P95/P99 và bottleneck analysis.
+Artifact `evidence/load-profile-basic.json` ghi nhận 10 request tuần tự qua Envoy `/ready`: P50 368.45 ms, P95/P99 1586.11 ms, error rate 0% và throughput 1.918 req/s.
 
-Load test cần được chạy riêng với mức tải phù hợp để tránh gây quá tải máy local 8 GB.
+Đây chỉ là baseline phù hợp máy 8 GB, không phải kết luận năng lực production. Bottleneck quan sát được là tail latency của readiness dependency fan-out; metrics hiện chỉ phân rã theo route nên không quy kết chính xác cho một dependency.
 
-### Failure / recovery evidence chưa hoàn tất
+### Failure / recovery đã xác minh cho Qdrant
 
-Trong quá trình dựng môi trường có gặp partial Docker resources và Windows console encoding, nhưng đây chưa phải failure/recovery scenario đầy đủ theo yêu cầu submission.
+`evidence/failure-recovery-qdrant.json` ghi lại Qdrant được stop tạm thời: gateway `/ready` chuyển HTTP 503 `not_ready`; sau khi start lại, collection trở về HTTP 200 với đúng 13 points trước/sau.
 
-Cần bổ sung một failure scenario có kiểm soát và chứng minh không mất dữ liệu.
+Không dùng `down -v` hoặc xóa volume. Scenario này chứng minh recovery và không mất dữ liệu Qdrant trong phạm vi basic stack; data-plane Airflow/Delta recovery vẫn chưa verify.
 
 ### LangSmith chưa được xác minh
 
@@ -118,6 +124,8 @@ Các validation đã hoàn thành:
 - portability check: PASS
 - Kubernetes/GitOps manifest contracts: PASS
 - Docker Compose basic và full profile config validation: PASS
+- Final local unit suite: `83 passed`
+- Final integration suite: BLOCKED bởi dependency Airflow/full profile trên máy 8 GB; không phải code failure
 
 Basic runtime đã xác minh:
 
@@ -138,22 +146,4 @@ Readiness của basic stack là `degraded` vì chỉ thiếu vLLM thật.
 
 ## 4. Contributions
 
-### [Tên thành viên 1]
-
-- [Điền phần đã thực hiện]
-- [Integration/IP phụ trách]
-- [Evidence hoặc validation đã thực hiện]
-
-### [Tên thành viên 2]
-
-- [Điền phần đã thực hiện]
-- [Integration/IP phụ trách]
-- [Evidence hoặc validation đã thực hiện]
-
-### [Tên thành viên 3]
-
-- [Điền phần đã thực hiện]
-- [Integration/IP phụ trách]
-- [Evidence hoặc validation đã thực hiện]
-
-> Cập nhật phần này theo đóng góp thực tế của từng thành viên. Không ghi đóng góp chưa thực hiện.
+Project được thực hiện cá nhân. Tôi chịu trách nhiệm toàn bộ phần implementation, validation, runtime verification, evidence collection và submission.
